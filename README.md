@@ -4,12 +4,8 @@
 ## Build the image
 
 ```
-<<<<<<< HEAD
 wget http://mirror.symnds.com/software/Apache/zookeeper/current/zookeeper-3.4.6.tar.gz
 docker build --rm=true -t medined/oracle8-zookeeper-3-4-6 .
-=======
-docker build -t $USER/oracle8-zookeeper-3-4-6 .
->>>>>>> 01c98997299088a24ec6027159787a5ed1f0cdba
 ```
 
 ## See the image
