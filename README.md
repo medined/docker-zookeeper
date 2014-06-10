@@ -31,7 +31,7 @@ docker logs $ZOOKEEPER
 Zookeeper accepts the "ruok" text on its port (2181) and it replies "imok".
 
 ```
-echo "ruok" | netcat -q 2 localhost 49153; echo ", $USER"
+echo "ruok" | netcat -q 2 localhost 2181; echo ", $USER"
 ```
 
 ## Stop the image
