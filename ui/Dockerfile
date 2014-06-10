@@ -7,7 +7,6 @@ RUN apt-get install -y git maven openjdk-7-jdk
 RUN git clone https://github.com/DeemOpen/zkui.git
 RUN cd /zkui && mvn clean install
 ADD config.cfg /zkui/target/config.cfg
-ADD zkui.sh /
 
 WORKDIR /zkui/target
 

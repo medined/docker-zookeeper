@@ -1,40 +1,45 @@
 docker-zookeeper
 ----------------
 
-This project has two components. The zookeeper directory allows you to start a three-node zookeeper cluster. The ui directory allows you to start a web application that can explore the zookeeper data. First start the zookeeper ensemble, then start the ui process.
+This project has two components. The zookeeper directory contains a Dockerfile to define a zookeeper image. The ui directory contains a Dockerfile to define an image containing DeemOpen's zkui project.
+
+Make sure you have wget and docker installed.
+
+# Building the images
+
+```
+./build_images.sh
+```
+
+This script file connects into both sub-directories to build images. The reesult is $USER/zookeeper and $USER/zookeeper-ui images.
+
+# Running the images
+
+```
+./start-cluster.sh
+```
+
+# Stopping the images
+
+```
+./stop-cluster.sh
+```
 
 # ZOOKEEPER
 
-First a single node zookeeper is started. Then you'll see how to build a three-node emsemble.
-
-## Single Node
-
-### Build the image
-
-```
-wget http://mirror.symnds.com/software/Apache/zookeeper/current/zookeeper-3.4.6.tar.gz
-docker build --rm=true -t $USER/zookeeper .
-```
-
-### See the image
-
-```
-docker images
-```
-
-### Run the image
+For experimenting, you might want to start a single zookeeper node.
 
 ```
 ZOOKEEPER=$(docker run -d -p 2181:2181 -t $USER/zookeeper)
 ```
 
-### Read the logs
+Read the logs
 
 ```
 docker logs $ZOOKEEPER
 ```
 
-### Verify the running image
+Verify the running image
 
 Zookeeper accepts the "ruok" text on its port (2181) and it replies "imok".
 
@@ -42,47 +47,35 @@ Zookeeper accepts the "ruok" text on its port (2181) and it replies "imok".
 echo "ruok" | netcat -q 2 localhost 2181; echo ", $USER"
 ```
 
-### Stop and remove the image
+Stop and remove the image
 
 ```
 docker stop $ZOOKEEPER
 docker rm $ZOOKEEPER
 ```
 
-### Using dynamic ports
+Using dynamic ports
 
 ```
 ZOOKEEPER=$(docker run -d -t $USER/zookeeper)
 echo "ruok" | netcat -q 2 localhost `docker port zookeeper 2181|sed 's/.*://'`; echo ", $USER"
+docker stop $ZOOKEEPER
+docker rm $ZOOKEEPER
 ```
 
-## Three Node Ensemble
+# Docker Utils
 
-Using the same docker image created above, we'll now create a three node ensemble.
+I've found the following commands helpful as I experiment with docker, so I making them easy to find.
 
-### Start the cluster
-
-```
-./start-cluster.sh
-```
-
-### Stop the ensemble
+## Stop docker processes
 
 ```
-./stop-cluster.sh
+docker ps -a | grep -v "CONTAINER" | awk '{print $1}' | xargs docker stop
 ```
 
-# Web Application
-
-Wraps DeemOpen's zkui project inside Docker.
-
-This project is designed to work with the https://github.com/medined/docker-oracle8-zookeeper-3-4-6 project. At the end of the following steps, you'll have a web-based zookeeper user interface able to read information stored in the zookeepers running under Docker.
+## Remove docker processes
 
 ```
-docker build --rm-true -t $USER/zookeeper-ui .
-docker run --name=zookeeper.ui -d -p 9090:9090 $USER/zookeeper-ui
-IP=`echo $(ifconfig eth0 | awk -F: '/inet addr:/ {print $2}' | awk '{ print $1 }')`
-echo "Visit http://$IP:9090/"
+docker ps -a | grep 'Exited' | awk '{print $1}' | xargs docker rm
 ```
-
 
