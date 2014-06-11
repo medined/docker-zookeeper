@@ -2,11 +2,15 @@
 
 NODEID=$1
 
+#
+# The entry point into the image is a script file that takes one
+# paramter - the node id.
+#
 CONTAINER_ID=$(sudo docker run -d -i \
   --name "zookeeper.${NODEID}" \
   -h "zoo${NODEID}" \
   -e "ZOO_NODE_NUM=${NODEID}" \
-  -t "$USER/zookeeper")
+  -t "$USER/zookeeper" $NODEID)
 
 sleep 1
 

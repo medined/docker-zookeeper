@@ -18,6 +18,15 @@ do
   ./start-node.sh $index
 done
 
+echo ""
+echo "Testing Connection to Zookeeper Nodes"
+echo "-------------------------------------"
+for index in `seq 3`;
+do
+  echo "ruok" | netcat -q 2 "10.0.10.$index" 2181; echo " from node $index!"
+done
+echo ""
+
 docker run --name=zookeeper.ui -d -p 9090:9090 $USER/zookeeper-ui >  /dev/null
 ./what-is-ui-url.sh
 
