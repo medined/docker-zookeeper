@@ -18,6 +18,9 @@ do
   ./start-node.sh $index
 done
 
+echo "Waiting 30 seconds for bridge network to settle."
+sleep 30
+
 echo ""
 echo "Testing Connection to Zookeeper Nodes"
 echo "-------------------------------------"
