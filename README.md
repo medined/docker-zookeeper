@@ -1,6 +1,29 @@
 docker-zookeeper
 ----------------
 
+!!! WARNING !!!
+!!! WARNING !!!
+!!! WARNING !!!
+
+Adding the server.X lines to the zoo.cfg has broken the cluster. Which probably means something is wrong at the networking level. You can remove these lines before starting the cluster to build and start the images. And to see the UI.
+
+```
+server.1=10.0.10.1:2888:3888
+server.2=10.0.10.2:2888:3888
+server.3=10.0.10.3:2888:3888
+```
+
+The logs show the following error:
+
+```
+2014-06-11 17:35:07,582 [myid:1] - WARN  [WorkerSender[myid=1]:QuorumCnxManager@382] - Cannot open channel to 2 at election address /10.0.10.2:3888
+java.net.NoRouteToHostException: No route to host
+```
+
+!!! WARNING !!!
+!!! WARNING !!!
+!!! WARNING !!!
+
 This project has two components. The zookeeper directory contains a Dockerfile to define a zookeeper image. The ui directory contains a Dockerfile to define an image containing DeemOpen's zkui project.
 
 Make sure you have wget and docker installed.
