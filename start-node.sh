@@ -14,12 +14,12 @@ CONTAINER_ID=$(sudo docker run -d -i \
 
 sleep 1
 
-sudo ./pipework br1 ${CONTAINER_ID} "10.0.10.${NODEID}/3"
-
-echo "Started [zoo${NODEID}] and assigned it the IP [10.0.10.${NODEID}]"
+sudo ./pipework br1 ${CONTAINER_ID} "10.0.10.${NODEID}/24"
 
 if [ "$NODEID" -eq "1" ] ; then
   sudo ifconfig br1 10.0.10.254
   echo "Created interface for host"
   sleep 1
 fi
+
+echo "Started [zoo${NODEID}] and assigned it the IP [10.0.10.${NODEID}]"
