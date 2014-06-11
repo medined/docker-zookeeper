@@ -19,9 +19,5 @@ do
 done
 
 docker run --name=zookeeper.ui -d -p 9090:9090 $USER/zookeeper-ui >  /dev/null
-IP=`echo $(ifconfig eth0 | awk -F: '/inet addr:/ {print $2}' | awk '{ print $1 }')`
-echo ""
-echo "Visit http://$IP:9090/ to see the web-based Zookeeper application."
-echo " Use admin/manager to log in."
-echo "" 
+./what-is-ui-url.sh
 
