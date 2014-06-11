@@ -5,6 +5,12 @@ This project has two components. The zookeeper directory contains a Dockerfile t
 
 Make sure you have wget and docker installed.
 
+# IP Usage
+
+10.0.10.1 - zookeeper node
+10.0.10.2 - zookeeper node
+10.0.10.3 - zookeeper node
+
 # Building the images
 
 ```

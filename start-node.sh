@@ -14,7 +14,7 @@ CONTAINER_ID=$(sudo docker run -d -i \
 
 sleep 1
 
-sudo ./pipework br1 ${CONTAINER_ID} "10.0.10.${NODEID}/8"
+sudo ./pipework br1 ${CONTAINER_ID} "10.0.10.${NODEID}/3"
 
 echo "Started [zoo${NODEID}] and assigned it the IP [10.0.10.${NODEID}]"
 
