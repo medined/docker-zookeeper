@@ -32,16 +32,4 @@ echo ""
 
 docker run --name=zookeeper.ui -d -p 9090:9090 $USER/zookeeper-ui >  /dev/null
 
-sudo docker run \
-  --name=cAdvisor
-  --volume=/var/run:/var/run:rw \
-  --volume=/sys/fs/cgroup/:/sys/fs/cgroup:ro \
-  --volume=/var/lib/docker/:/var/lib/docker:ro \
-  --publish=8080:8080 \
-  --detach=true \
-  google/cadvisor
-
-echo ""
-echo "Visit http://$IP:8080 to see the web-based cAdivsor application."
-echo ""
 ./what-is-ui-url.sh
