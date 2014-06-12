@@ -2,10 +2,11 @@
 
 set -e
 
-if sudo docker ps | grep "$USER/zookeeper" >/dev/null; then
-  sudo docker ps | grep "$USER/zookeeper" | awk '{ print $1 }' | xargs -r sudo docker kill >/dev/null
-fi
-docker ps -a | grep "$USER/zookeeper" | awk '{print $1}' | xargs docker rm > /dev/null
+echo "Stopping instances"
+docker stop cAdvisor zookeeper.ui zookeeper.1 zookeeper.2 zookeeper.3 || true
 
-echo "Stopped the cluster and cleared all of the running containers."
+echo "Removing instances"
+docker rm cAdvisor zookeeper.ui zookeeper.1 zookeeper.2 zookeeper.3 || true
+
+echo "Stopped the cluster"
 
