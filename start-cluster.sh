@@ -18,7 +18,7 @@ do
   ./start-node.sh $index
 done
 
-echo "Waiting 30 seconds for bridge network to settle."
+echo "Waiting 30 seconds for zookeeper nodes to find each other."
 sleep 30
 
 echo ""
