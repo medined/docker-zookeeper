@@ -12,8 +12,6 @@ CONTAINER_ID=$(sudo DOCKER_HOST=$DOCKER_HOST docker run -d -i \
   -e "ZOO_NODE_NUM=${NODEID}" \
   -t "medined/zookeeper" $NODEID)
 
-sleep 1
-
 sudo ./pipework br1 ${CONTAINER_ID} "10.0.10.${NODEID}/24"
 
 if [ "$NODEID" -eq "1" ] ; then
