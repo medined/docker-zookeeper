@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo docker run \
+sudo DOCKER_HOST=$DOCKER_HOST docker run \
   --name=cAdvisor \
   --volume=/var/run:/var/run:rw \
   --volume=/sys/fs/cgroup/:/sys/fs/cgroup:ro \

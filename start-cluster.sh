@@ -1,7 +1,7 @@
 #! /bin/bash 
 set -e
 
-if sudo docker ps | grep "$USER/zookeeper" >/dev/null; then
+if sudo DOCKER_HOST=$DOCKER_HOST docker ps | grep "medined/zookeeper" >/dev/null; then
   echo ""
   echo "It looks like you already have some containers running."
   echo "Please take them down before attempting to bring up another"
@@ -30,6 +30,6 @@ do
 done
 echo ""
 
-docker run --name=zookeeper.ui -d -p 9090:9090 $USER/zookeeper-ui >  /dev/null
+sudo DOCKER_HOST=$DOCKER_HOST docker run --name=zookeeper.ui -d -p 9090:9090 medined/zookeeper-ui >  /dev/null
 
 ./what-is-ui-url.sh

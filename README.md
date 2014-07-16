@@ -17,7 +17,7 @@ Make sure you have wget and docker installed.
 ./build_images.sh
 ```
 
-This script file connects into both sub-directories to build images. The reesult is $USER/zookeeper and $USER/zookeeper-ui images.
+This script file connects into both sub-directories to build images. The reesult is medined/zookeeper and medined/zookeeper-ui images.
 
 # Running the images
 
@@ -45,7 +45,7 @@ done
 For experimenting, you might want to start a single zookeeper node.
 
 ```
-ZOOKEEPER=$(docker run -d -p 2181:2181 -t $USER/zookeeper)
+ZOOKEEPER=$(docker run -d -p 2181:2181 -t medined/zookeeper)
 ```
 
 Read the logs
@@ -72,7 +72,7 @@ docker rm $ZOOKEEPER
 Using dynamic ports
 
 ```
-ZOOKEEPER=$(docker run -d -t $USER/zookeeper)
+ZOOKEEPER=$(docker run -d -t medined/zookeeper)
 echo "ruok" | netcat -q 2 localhost `docker port zookeeper 2181|sed 's/.*://'`; echo ", $USER"
 docker stop $ZOOKEEPER
 docker rm $ZOOKEEPER

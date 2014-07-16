@@ -1,23 +1,13 @@
-FROM ubuntu
+FROM medined/docker-java-oracle8
 MAINTAINER David Medinets <david.medinets@gmail.com>
 
 # Source: https://www.digitalocean.com/community/articles/how-to-install-java-on-ubuntu-with-apt-get
 
-# Get add-apt-repositoy command.
-RUN apt-get update
-RUN apt-get install -y software-properties-common
+ADD http://mirror.symnds.com/software/Apache/zookeeper/current/zookeeper-3.4.6.tar.gz /opt/
+RUN cd /opt && \
+  tar xfz /opt/zookeeper-3.4.6.tar.gz && \
+  rm /opt/zookeeper-3.4.6.tar.gz
 
-# Add Oracle Java repository.
-RUN add-apt-repository -y ppa:webupd8team/java
-
-# Add flag file to automate Oracle Java installation
-RUN echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-
-# Install Oracle Java
-RUN apt-get update && apt-get install -y oracle-java8-installer
-
-ADD zookeeper-3.4.6.tar.gz /opt
 ADD zoo.cfg /opt/zookeeper-3.4.6/conf/zoo.cfg
 RUN mkdir -p /zookeeper/data 
 
