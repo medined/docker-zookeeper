@@ -14,6 +14,7 @@ RUN mkdir -p /zookeeper/data
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 ENV ZOOKEEPER_DATA_DIR /zookeeper/data
 
+ADD pipework           /pipework
 ADD start-zookeeper.sh /start-zookeeper.sh
 
 EXPOSE 2181 2888 3888
