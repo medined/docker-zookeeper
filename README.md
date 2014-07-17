@@ -1,31 +1,22 @@
 docker-zookeeper
 ----------------
 
-This project has two components. The zookeeper directory contains a Dockerfile to define a zookeeper image. The ui directory contains a Dockerfile to define an image containing DeemOpen's zkui project.
-
-Make sure you have wget and docker installed.
-
-# IP Usage
-
-10.0.10.1 - zookeeper node
-10.0.10.2 - zookeeper node
-10.0.10.3 - zookeeper node
-
-# Building the images
+Using this project you can start a three node Zookeeper ensemble using the commands below.
 
 ```
 ./build_images.sh
+./start_cluster.sh
 ```
 
-This script file connects into both sub-directories to build images. The reesult is medined/zookeeper and medined/zookeeper-ui images.
-
-# Running the images
+# IP Usage
 
 ```
-./start-cluster.sh
+10.0.10.1 - zookeeper node
+10.0.10.2 - zookeeper node
+10.0.10.3 - zookeeper node
 ```
 
-## Which node is leader?
+## Which node is Zookeeper leader?
 
 ```
 for index in `seq 3`;
@@ -34,53 +25,35 @@ do
 done
 ```
 
-# Stopping the images
+# Stopping the cluster
 
 ```
 ./stop-cluster.sh
 ```
 
-# ZOOKEEPER
-
-For experimenting, you might want to start a single zookeeper node.
+## Read the logs
 
 ```
-ZOOKEEPER=$(docker run -d -p 2181:2181 -t medined/zookeeper)
+docker logs zookeeper.1
 ```
 
-Read the logs
-
-```
-docker logs $ZOOKEEPER
-```
-
-Verify the running image
+## Verify the running image
 
 Zookeeper accepts the "ruok" text on its port (2181) and it replies "imok".
 
 ```
-echo "ruok" | netcat -q 2 localhost 2181; echo ", $USER"
+echo "ruok" | netcat -q 2 10.0.10.2 2181; echo ", $USER"
 ```
 
-Stop and remove the image
+## Stop and remove the image
 
 ```
-docker stop $ZOOKEEPER
-docker rm $ZOOKEEPER
-```
-
-Using dynamic ports
-
-```
-ZOOKEEPER=$(docker run -d -t medined/zookeeper)
-echo "ruok" | netcat -q 2 localhost `docker port zookeeper 2181|sed 's/.*://'`; echo ", $USER"
-docker stop $ZOOKEEPER
-docker rm $ZOOKEEPER
+docker stop zookeeper.2 | xargs docker rm
 ```
 
 # Docker Utils
 
-I've found the following commands helpful as I experiment with docker, so I making them easy to find.
+I've found the following commands helpful as I experiment with docker. Now thery are easy to find.
 
 ## Stop docker processes
 
