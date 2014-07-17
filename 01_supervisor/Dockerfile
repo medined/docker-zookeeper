@@ -1,4 +1,5 @@
 FROM ubuntu
+MAINTAINER David Medinets <david.medinets@gmail.com>
 
 ADD . /docker
 
